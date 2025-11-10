@@ -1,0 +1,100 @@
+{# SPDX-FileCopyrightText: © 2014-2015 Siemens AG
+
+   SPDX-License-Identifier: FSFAP
+#}
+{% extends "include/base.html.twig" %}
+{% block styles %}
+  {{ parent() }}
+  <link rel="stylesheet" href="css/highlights.css"/>
+{% endblock %}
+
+{% block content %}
+  <div id="leftrightalignment" name="leftrightalignment">
+    <table border="0" style="padding:0px; height:100%; width:100%">
+      <tr>
+        <td style="padding:0px; position:relative; height: 100%; width:50%">
+          <div class="centered" style='padding:2px;'>
+            {{ pageMenu }}
+            <button class="legendHider btn btn-default btn-sm">
+              {{ 'Hide Legend'| trans }}
+            </button>
+            <button class="legendShower btn btn-default btn-sm">
+              {{ 'Show Legend'| trans }}
+            </button>
+          </div>
+          <div class="boxnew">{{ textView }}</div>
+          <div id="legendBox" name="legendBox" style="background-color:white; padding:2px; border:1px outset #222222; width:150px; position:absolute; right:17px; bottom:17px; ">
+            <b>{{ 'Legend'| trans }}</b><br/>
+            {{ legendBox }}
+          </div>
+        </td>
+        <td class="headerBox">
+          {% block rhs %}
+            {% include 'ui-xp-view_rhs.html.twig' %}
+          {% endblock %}
+          {% if foss_content or scan_content %}
+            <h3 style="padding-top: 1.3em;">Scanner findings:</h3>
+            <table border="0" width="100%">
+            <tr>
+              <td valign="top">
+                <div id="CopyrightViewTabs" style="padding-bottom:2em">
+                  <ul>
+                  <li><a href="#FossTab">FOSSology</a></li>
+                  <li><a href="#ScanTab">ScanCode</a></li>
+                  </ul>
+                  <div id="FossTab">
+                  {{ foss_content }}
+                  </div>
+                  <div id="ScanTab">
+                  {{ scan_content }}
+                  </div>
+                </div>
+              </td>
+              <td valign="top">{{ fileList }}</td>
+            </tr>
+            </table>
+          {%endif%}
+        </td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}
+{% block foot %}
+  {{ parent() }}
+
+  <script src="scripts/jquery.dataTables.min.js" type="text/javascript"></script>
+  <script src="scripts/jquery.dataTables.editable.js" type="text/javascript"></script>
+  <script src="scripts/jquery.dataTables.select.js" type="text/javascript"></script>
+  <script src="scripts/jquery.jeditable.js" type="text/javascript"></script>
+  <script src="scripts/jquery.validate.js" type="text/javascript"></script>
+  <script src="scripts/job-queue-poll.js" type="text/javascript"></script>
+  <script src="scripts/change-license-common.js" type="text/javascript"></script>
+  <script src="scripts/change-license-view.js" type="text/javascript"></script>
+  <script src="scripts/legend.js" type="text/javascript"></script>
+  <script src="scripts/tools.js" type="text/javascript"></script>
+  <script src="scripts/supervised.js" type="text/javascript"></script>
+  <script type="text/javascript">{% include "next-options.js.twig" %}</script>
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('img').tooltip();
+      $('#decisionTable').DataTable({
+        "paging":   false,
+        "ordering": false,
+        "info":     false,
+      });
+    });
+    {{ script }}
+  </script>
+
+  {% include "copyrighthist_scripts.html.twig" %}
+  {% if agentName == "copyright" or agentName == "scancode" %}
+    <script language="javascript">
+    {% for type, table in tables %}
+    {% include "histTable.js.twig" with table %}
+    {% endfor %}
+    </script>
+  {%endif%}
+{% endblock %}
+
