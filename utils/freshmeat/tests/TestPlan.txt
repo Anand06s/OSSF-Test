@@ -1,0 +1,25 @@
+                 Test plan for Freshmeat
+/*
+ cp2foss.php
+ SPDX-FileCopyrightText: © 2007 Hewlett-Packard Development Company, L.P.
+
+ SPDX-License-Identifier: GPL-2.0-only
+*/
+
+Last updated: $Id: TestPlan.txt 59 2008-01-07 18:38:11Z rrando $
+
+Created by:
+
+Modified by: 
+
+This is just a placeholder for now.
+
+Use the different assert methods to check for file existence after a run.
+Same for logs.
+
+This plan should really consist of separate plans for each of the main 
+programs used in the process:
+- mktop1k
+- diffm
+- get-projects
+- GetFM

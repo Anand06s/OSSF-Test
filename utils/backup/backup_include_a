@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: © Fossology contributors
+
+# SPDX-License-Identifier: FSFAP
+
++ /repository/
++ /db/
+- /*
++ /repository/localhost/
+- /repository/*
++ /repository/localhost/files/
+- /repository/localhost/*
++ /repository/localhost/files/[0-9]*
+- /repository/localhost/files/*

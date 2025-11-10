@@ -1,0 +1,12 @@
+#!/bin/bash
+# SPDX-FileCopyrightText: © 2017 Siemens AG
+
+# SPDX-License-Identifier: FSFAP
+
+#### start apache2
+echo "Starting apache2..."
+/etc/init.d/apache2 start
+
+#### start fossology scheduler
+echo "Starting fossology scheduler..."
+/etc/init.d/fossology start
