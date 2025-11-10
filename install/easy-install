@@ -1,0 +1,26 @@
+#!/bin/bash
+# FOSSology Easy Install script
+# SPDX-FileCopyrightText: © 2017,2022, Siemens AG
+#
+# SPDX-License-Identifier: FSFAP
+#
+# Description: Easy install script for fossology. Goes through the steps on the Fossology wiki
+set -e
+cd "$(dirname $(readlink -f "${BASH_SOURCE[0]}"))"/..
+sudo utils/fo-cleanold
+sudo utils/fo-installdeps
+sudo cmake -DCMAKE_BUILD_TYPE=Release -S. -B./build -G Ninja 
+sudo cmake --build ./build --parallel 
+sudo ninja -C ./build install
+sudo /usr/local/lib/fossology/fo-postinstall
+sudo cp install/src-install-apache-example.conf /etc/apache2/sites-available/fossology.conf
+sudo ln -s /etc/apache2/sites-available/fossology.conf /etc/apache2/sites-enabled/fossology.conf
+sudo install/scripts/php-conf-fix.sh --overwrite
+sudo /etc/init.d/apache2 restart
+sudo /etc/init.d/fossology restart
+
+# open fossology page, if X server is installed
+if [ -n ${DISPLAY} ]
+then
+  xdg-open http://localhost/repo &disown
+fi
